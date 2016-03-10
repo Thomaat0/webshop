@@ -5,6 +5,13 @@
  * Date: 08/03/2016
  * Time: 15:17
  */
+
+$productid = $_GET["productid"];
+
+require_once ("html/db.php");
+$tsql = "SELECT * FROM PRODUCT WHERE PRODUCTNUMBER = " . $productid;
+$result = sqlsrv_query($conn, $tsql, null);
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +26,7 @@
 <?php include "html/header.html"?>
 <div class="content">
     <article>
-
+        <??>
     </article>
     <?php include "html/aside.html"?>
 </div>
