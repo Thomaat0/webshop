@@ -6,21 +6,20 @@
  * Time: 09:36
  */
 
-$serverName = '(local)\SQLEXPRESS';
-$connectionInfo = array("Database" => "WEBSHOP", "UID" => "sa", "PWD" => "wachtwoord");
-$conn = sqlsrv_connect($serverName, $connectionInfo);
-
-$tsql = "SELECT * FROM PRODUCT";
+require_once ("html/db.php");
+$tsql = "SELECT * FROM PRODUCT WHERE STOCK > 0";
 $result = sqlsrv_query($conn, $tsql, null);
 
 $products = array();
 $productnr = 0;
 while($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC))   {
-    $product = '<div class = "product_small_child"><img src="' . $row['PRODUCT_IMAGE'] . '" alt="' . $row['PRODUCTNAME'] . '">' . '<br>' . $row['PRODUCTNAME'] . '<br>' . $row['PRICE'] . '</div>';
+    $product = '<div class = "product_small_child"><a href="productpagina.php?productid=' . $row['PRODUCTNUMBER'] . '"><img src="' . $row['PRODUCT_IMAGE'] . '" alt="' . $row['PRODUCTNAME'] . '"></a>' . '<br>' . $row['PRODUCTNAME'] . '<br>' . $row['PRICE'] . '</div>';
 
     $products[$productnr] = $product;
     $productnr ++;
 }
+sqlsrv_free_stmt($result);
+sqlsrv_close($conn);
 ?>
 
 <!DOCTYPE html>
